@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_221_027_095_601) do
+ActiveRecord::Schema.define(version: 20_221_027_145_143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -22,17 +22,27 @@ ActiveRecord::Schema.define(version: 20_221_027_095_601) do
   end
 
   create_table 'categories', force: :cascade do |t|
-    t.string 'name', null: false
+    t.string 'name'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.bigint 'product_id', null: false
+    t.bigint 'product_id'
     t.index ['product_id'], name: 'index_categories_on_product_id'
   end
 
+  create_table 'orders', force: :cascade do |t|
+    t.decimal 'total'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.bigint 'user_id'
+    t.datetime 'time_stamp'
+    t.integer 'status', default: 0
+    t.index ['user_id'], name: 'index_orders_on_user_id'
+  end
+
   create_table 'products', force: :cascade do |t|
-    t.string 'title', null: false
-    t.text 'description', null: false
-    t.decimal 'price', null: false
+    t.string 'title'
+    t.text 'description'
+    t.decimal 'price'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
@@ -55,10 +65,10 @@ ActiveRecord::Schema.define(version: 20_221_027_095_601) do
     t.datetime 'remember_created_at'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'full_name', null: false
-    t.string 'user_name', null: false
+    t.string 'full_name'
+    t.string 'user_name'
     t.integer 'user_type', default: 0
-    t.bigint 'cart_id', null: false
+    t.bigint 'cart_id'
     t.index ['cart_id'], name: 'index_users_on_cart_id'
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
@@ -74,5 +84,6 @@ ActiveRecord::Schema.define(version: 20_221_027_095_601) do
 
   add_foreign_key 'carts', 'users'
   add_foreign_key 'categories', 'products'
+  add_foreign_key 'orders', 'users'
   add_foreign_key 'users', 'carts'
 end
