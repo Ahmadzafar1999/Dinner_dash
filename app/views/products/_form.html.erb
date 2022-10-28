@@ -13,6 +13,10 @@
   Product Title : <%= form.text_field :title, required: true %>
   Product Description : <%= form.text_area :description, required: true %>
   Product Price : <%= form.number_field :price, required: true %>
+  <div class="field">
+    <%= form.label :Category%><br>
+  <%= form.collection_select :category_ids, Category.all, :id, :name, {include_blank: "select category"},  {:multiple => true} %>
+</div
   <div class="actions">
     <%= form.submit %>
   </div>
