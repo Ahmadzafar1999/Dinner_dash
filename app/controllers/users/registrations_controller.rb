@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-# Devise generated registrations controller for sign up
 module Users
+  # Devise generated User module for sign up
   class RegistrationsController < Devise::RegistrationsController
     before_action :configure_sign_up_params, only: [:create]
+    after_action :setup_cart, only: [:create]
     # before_action :configure_account_update_params, only: [:update]
 
     # GET /resource/sign_up
@@ -12,9 +13,9 @@ module Users
     # end
 
     # POST /resource
-    def create
-      super
-    end
+    # def create
+    #   super
+    # end
 
     # GET /resource/edit
     # def edit
@@ -44,7 +45,7 @@ module Users
 
     # If you have extra params to permit, append them to the sanitizer.
     def configure_sign_up_params
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i[full_name user_name])
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[full_name user_name email password])
     end
 
     # If you have extra params to permit, append them to the sanitizer.
@@ -61,5 +62,10 @@ module Users
     # def after_inactive_sign_up_path_for(resource)
     #   super(resource)
     # end
+    private
+
+    def setup_cart
+      current_user.cart = Cart.create!(user_id: current_user.id) if current_user.customer?
+    end
   end
 end
