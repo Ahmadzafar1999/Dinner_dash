@@ -5,6 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_one :cart, dependent: :destroy
+  has_many :orders
   enum user_type: %i[customer admin]
   validates :user_type, inclusion: { in: %w[customer admin] }
   validates :email, :user_type, :password, :full_name, presence: true
