@@ -1,29 +1,42 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Products</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @products.each do |product| %>
+<div class="center-heading">
+  <h1><strong>Products Catalogue</strong></br></br></h1>
+</div>
+<div class="center-screen options">
+  <table>
+    <thead>
       <tr>
-        <td><%= product.title %></td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to '+', cart_path(current_user.cart.id, product_id: product.id, counter: 1), method: 'put' %></td>
-        <td><%= link_to '-', cart_path(current_user.cart.id, product_id: product.id, counter: 0), method: 'put' %></td>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Product', new_product_path %>
-<%= link_to 'View Cart', cart_path(current_user.cart.id) %>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <div class="card mb-3">
+          <%= image_tag (product.image), alt: 'icon', class: 'card-img-top', style: "width: 400px" %>
+          <div class="card-body">
+            <h5 class="card-title">Name : <%= product.title %></h5>
+            <p class="card-text">Description : <%= product.description %></p>
+            <p class="card-text">Price : <%= product.price %> $</p>
+            <% if current_user.customer? %>
+              <%= button_to 'Add to Cart', line_items_path(:product_id => product.id), method: 'post', class: "btn btn-success" %>
+            <% elsif current_user.admin? %>
+              <%= button_to 'Edit Product', edit_product_path(:id => product.id), method: 'get', class: "btn btn-success"%>
+            <% end %>
+            <p class="card-text"><small class="text-muted"><%= product.updated_at %></small></p>
+          </div>
+        </div>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+        <% if current_user.admin? %>
+          <%= button_to 'New Product', new_product_path, method: 'get', class: "btn btn-lg btn-success" %><br>
+          <%= button_to 'View All Orders', orders_path, method: 'get', class: "btn btn-lg btn-primary" %><br>
+          <%= button_to 'Create New Category', new_category_path, method: 'get', class: "btn btn-lg btn-primary" %><br>
+        <% end %>
+        <% if current_user.customer? %>
+          <%= button_to 'View Cart', cart_path(current_user.cart.id), method: 'get', class: "btn btn-primary btn-lg btn-block" %></br></br>
+          <%= button_to 'View Order History', orders_path, method: 'get', class: "btn btn-lg btn-primary" %><br>
+        <% end %>
+</div>

@@ -1,23 +1,57 @@
-<table>
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Quantity</th>
-      <th><%=   %></th>
-      <th>Subtotal</th>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @lineitems.each do |lineitem| %>
-      <tr>
-        <td><%= lineitem.product.title %></td>
-        <td><%= lineitem.quantity %></td>
-        <td><%=   %></td>
-        <td><%= lineitem.subtotal %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= link_to 'Edit', edit_cart_path(@cart) %> |
-<%= link_to 'Back', products_path %>
+<div class="center-heading">
+  <h1><strong>Your Cart</strong></br></br></h1>
+</div>
+<div class="boundary">
+  <div class="content-one", style="width: 46%">
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th><%=   %></th>
+          <th>Quantity</th>
+          <th><%=   %></th>
+          <th>Subtotal</th>
+          <th><%=       %></th>
+          <th colspan="4"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sum = 0 %>
+        <% @lineitems.each do |lineitem| %>
+          <tr>
+              <td><%= lineitem.product.title %></td>
+              <th><%=   %></th>
+              <td><%= lineitem.quantity %></td>
+              <td><%=   %></td>
+              <td><%= lineitem.subtotal %></td>
+              <% @sum += lineitem.subtotal %>
+              <td><%= link_to '+', line_item_path(lineitem.id, product_id: lineitem.product.id, counter: 1), method: 'put' %></td>
+            <% if lineitem.quantity == 1 %>
+              <td><%= link_to 'x', line_item_path(id: lineitem.id), method: 'delete' %></td>
+            <% else %>
+              <td><%= link_to '-', line_item_path(lineitem.id, product_id: lineitem.product.id, counter: 0), method: 'put' %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <strong>Total : <%= @sum %> $</strong>
+  </div>
+  <div class="no-content">
+    <div style:"margin-right: 40px">
+      <p><strong>Payment Method : </strong></p>
+      <%= form_with model: Order, url: orders_path, method: :post do |form| %>
+        <%= form.hidden_field :total, value: @sum %>
+        <%= form.hidden_field :time_stamp, value: DateTime.now %>
+        <%= form.hidden_field :user_id, value: current_user.id %>
+        <%= form.radio_button :status, 'paid' %>
+        <%= form.label :status, 'Pay online' %>
+        <%= form.radio_button :status, 'ordered' %>
+        <%= form.label :status, 'Cash on delivery' %></br></br>
+        <%= submit_tag("Place Order", class: "btn btn-lg btn-success") %>
+      <% end %>
+      </br>
+      <%= button_to '     Back     ', products_path, method: 'get', class: "btn btn-lg btn-primary" %>
+    </div>
+  </div>
+</div>

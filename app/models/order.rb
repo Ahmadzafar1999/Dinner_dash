@@ -12,6 +12,6 @@ class Order < ApplicationRecord
   private
 
   def not_in_past
-    errors.add(:date, 'not in past') if time_stamp < Datetime.now
+    errors.add(:date, 'in past') if time_stamp < (Time.now - 1.minutes)
   end
 end

@@ -1,0 +1,32 @@
+<div class="center-heading">
+  <h1><strong>Your Order</strong></br></br></h1>
+</div>
+<div class="center-screen options">
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th><%=   %></th>
+        <th>Quantity</th>
+        <th><%=   %></th>
+        <th>Subtotal</th>
+        <th colspan="4"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @lineitems.each do |lineitem| %>
+        <tr>
+          <td><%= lineitem.product.title %></td>
+          <td><%=   %></td>
+          <td><%= lineitem.quantity %></td>
+          <td><%=   %></td>
+          <td><%= lineitem.subtotal %></td>
+        </tr></br></br>
+      <% end %>
+    </tbody>
+  </table>
+  <strong>Order Status : <%= @order.status %></strong><br>
+  <strong>Total : <%= @order.total %> $</strong><br><br>
+  <%= button_to 'Back', products_path, method: 'get', class: "btn btn-primary btn-lg btn-block" %>
+</div>

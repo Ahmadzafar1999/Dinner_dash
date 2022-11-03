@@ -2,5 +2,5 @@
 
 <%= render 'form', product: @product %>
 
-<%= link_to 'Show', @product %> |
-<%= link_to 'Back', products_path %>
+<%= button_to 'Show', @product, method: 'get', class: "btn btn-info" %>
+<%= button_to 'Back', products_path, method: 'get', class: "btn btn-primary" %>
