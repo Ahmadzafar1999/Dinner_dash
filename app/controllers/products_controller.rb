@@ -18,6 +18,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
+    assign_categories
     if @product.save
       redirect_to product_path(@product)
     else
@@ -39,6 +40,11 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find_by(id: params[:id])
+  end
+
+  def assign_categories
+    ids = params[:product][:category_ids].filter { |el| el != '' }
+    @product.categories << Category.where(id: ids.map(&:to_i))
   end
 
   def product_params

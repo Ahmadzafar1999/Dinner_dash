@@ -1,0 +1,23 @@
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th><%=   %></th>
+      <th>Subtotal</th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lineitems.each do |lineitem| %>
+      <tr>
+        <td><%= lineitem.product.title %></td>
+        <td><%= lineitem.quantity %></td>
+        <td><%=   %></td>
+        <td><%= lineitem.subtotal %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Edit', edit_cart_path(@cart) %> |
+<%= link_to 'Back', products_path %>
