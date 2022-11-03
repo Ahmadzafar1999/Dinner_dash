@@ -2,48 +2,23 @@
 
 # This is the product category controller
 class CategoriesController < ApplicationController
-  before_action :set_category, only: %i[show edit update destroy]
-
-  def index
-    @categories = Category.all
-  end
-
-  def show; end
+  before_action :set_category, only: %i[destroy]
 
   def new
     @category = Category.new
   end
 
-  def edit; end
-
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to category_path(@category)
+      redirect_to products_path
     else
-      redirect_to categories_path
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @category.update(category_params)
-        format.html { redirect_to category_url(@category), notice: 'Category was successfully updated.' }
-        format.json { render :show, status: :ok, location: @category }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+      redirect_to new_category_path
     end
   end
 
   def destroy
     @category.destroy
-
-    respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private

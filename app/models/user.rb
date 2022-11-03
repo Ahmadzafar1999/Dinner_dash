@@ -11,4 +11,7 @@ class User < ApplicationRecord
   validates :email, :user_type, :password, :full_name, presence: true
   validates_uniqueness_of :email, :user_name
   validates_length_of :user_name, in: 2..32
+
+  scope :admin, -> { where(user_type: user_type[:admin]) }
+  scope :customer, -> { where(user_type: user_type[:customer]) }
 end

@@ -2,9 +2,9 @@
 
 # This controller is parent to all other parents
 class ApplicationController < ActionController::Base
+  include Pundit
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def configure_permitted_parameters

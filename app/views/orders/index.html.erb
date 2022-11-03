@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<div class="center-heading">
+  <h1><strong>ALL ORDERS</strong></br></br></h1>
+</div>
+<div class="center-screen options">
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Order Id : <%= order.id %></h5>
+            <p class="card-text">Status : <%= order.status %></p>
+            <p class="card-text">Total Amount : <%= order.total %> $</p>
+            <% @lineitems = order.lineItems %>
+              <% @lineitems.each do |lineitem| %>
+                <div class="card mb-3">
+                  <p class="card-text">Product Name : <%= lineitem.product.title %></p>
+                  <p class="card-text">Quantity : <%= lineitem.quantity %></p>
+                  <p class="card-text">Subtotal : <%= lineitem.subtotal %> $</p><br>
+                </div>
+            <% end %>
+            <p class="card-text"><small class="text-muted"><%= order.time_stamp %></small></p>
+          </div>
+          <% if order.status == 'ordered' || order.status == 'paid' %>
+            <%= button_to 'Cancel Order', order_path(order.id, recieved: 0), method: 'patch', class: "btn btn-danger " %><br>
+            <%= button_to 'Complete Order', order_path(order.id, recieved: 1), method: 'patch', class: "btn btn-info " %><br><br>
+        <% end %>
+        </div>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+  <%= button_to '     Back     ', products_path, method: 'get', class: "btn btn-lg btn-primary" %>
+</div>

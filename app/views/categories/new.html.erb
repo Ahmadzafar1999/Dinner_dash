@@ -1,5 +1,5 @@
-<h1>New Category</h1>
+<h1 class="center-heading">New Category</h1>
 
 <%= render 'form', category: @category %>
 
-<%= link_to 'Back', categories_path %>
+<%= button_to 'Back', products_path, method: 'get', class: "center-heading btn btn-primary" %>

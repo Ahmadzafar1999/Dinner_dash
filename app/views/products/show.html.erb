@@ -1,8 +1,16 @@
-<p id="notice"><%= notice %></p>
-<td><strong>Product Name : </strong><%= @product.title %></td></br>
-<td><strong>Product Description : </strong><%= @product.description %></td></br>
-<td><strong>Product Price : </strong><%= @product.price %></td></br></br>
+<div class="card mb-3 center-screen options">
+  <%= image_tag (@product.image), alt: 'icon', class: 'card-img-top', style: "width: 400px" %>
+  <div class="card-body">
+    <h5 class="card-title">Name : <%= @product.title %></h5>
+    <p class="card-text">Description : <%= @product.description %></p>
+    <p class="card-text">Price : <%= @product.price %> $</p>
+    <% if current_user.customer? %>
+      <%= button_to 'Add to Cart', line_items_path(:product_id => @product.id), method: 'post', class: "btn btn-success" %>
+    <% end %>
+    <p class="card-text"><small class="text-muted"><%= @product.updated_at %></small></p>
+  </div>
+</div>
 <div>
-  <%= link_to 'Edit', edit_product_path(@product) %> |
-  <%= link_to 'Back', products_path %>
+  <%= button_to 'Edit', edit_product_path(@product), method: 'get', class: "btn btn-warning" %>
+  <%= button_to 'Back', products_path , method: 'get', class: "btn btn-primary" %>
 </div>

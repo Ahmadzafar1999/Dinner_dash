@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DinnerDash</title>
+    <title>Dinner Dash</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <style>
+  .colorMe{
+    color: white;
+    opacity:1;
+  }
+  a:hover{
+    background-color: orange;
+    text-decoration: none;
+  }
+  .navbar-nav > li{
+    padding-left:30px;
+    padding-right:30px;
+  }
+</style>
   <body>
+    <%= render 'shared/navbar' %>
     <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>

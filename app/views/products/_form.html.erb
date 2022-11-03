@@ -1,23 +1,31 @@
-<%= form_with(model: product, local: true) do |form| %>
-  <% if product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+<div class="center-screen options">
+  <%= form_with(model: product, local: true) do |form| %>
+    <% if product.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
-      <ul>
-      <% product.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    Product Title : <%= form.text_field :title, required: true %></br></br>
+    Product Description : <br><%= form.text_area :description, required: true %></br></br>
+    Product Price : <%= form.number_field :price, required: true %></br></br>
+    <div class="field">
+    <div> <%= form.label :image%> </div>
+    <div><%= form.file_field :image%></div>
+    </div>
+    <div class="field">
+      </br>
+      <%= form.label :Category%><br>
+    <%= form.collection_select :category_ids, Category.all, :id, :name, {include_blank: "select category"},  {:multiple => true} %>
+  </div
+
+    <div class="actions">
+      <%= form.submit %>
     </div>
   <% end %>
-  Product Title : <%= form.text_field :title, required: true %>
-  Product Description : <%= form.text_area :description, required: true %>
-  Product Price : <%= form.number_field :price, required: true %>
-  <div class="field">
-    <%= form.label :Category%><br>
-  <%= form.collection_select :category_ids, Category.all, :id, :name, {include_blank: "select category"},  {:multiple => true} %>
-</div
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

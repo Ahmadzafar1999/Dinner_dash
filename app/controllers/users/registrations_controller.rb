@@ -13,9 +13,6 @@ module Users
     # end
 
     # POST /resource
-    # def create
-    #   super
-    # end
 
     # GET /resource/edit
     # def edit
@@ -45,7 +42,7 @@ module Users
 
     # If you have extra params to permit, append them to the sanitizer.
     def configure_sign_up_params
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i[full_name user_name email password])
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[full_name user_name email password user_type])
     end
 
     # If you have extra params to permit, append them to the sanitizer.
