@@ -2,12 +2,13 @@
 
 # This is the lineItems controller for manipulating and managing the data for the whole schema
 class LineItemsController < ApplicationController
+  include Lineitemable
   before_action :set_product, only: %i[create update]
   before_action :set_line_item, only: [:destroy]
-  before_action :set_order, only: [:index]
 
   def index
-    @lineitems = LineItem.where(order_id: params[:order_id])
+    @lineitems = line_items_in_order(params[:order_id])
+    @order = Order.find_by(id: params[:order_id])
   end
 
   def create
@@ -15,10 +16,7 @@ class LineItemsController < ApplicationController
   end
 
   def update
-    @lineitem = LineItem.where(cart_id: current_user.cart.id, product_id: @product.id)
-    @lineitem.first.quantity += 1 if params[:counter] == '1'
-    @lineitem.first.quantity -= 1 if params[:counter] == '0'
-    @lineitem.first.subtotal =  @lineitem.first.product.price * @lineitem.first.quantity
+    @lineitem = line_item_to_update(@product.id, params[:counter])
     @lineitem.first.save
     redirect_to cart_path(current_user.cart.id)
   end
@@ -36,9 +34,5 @@ class LineItemsController < ApplicationController
 
   def set_product
     @product = Product.find_by(id: params[:product_id])
-  end
-
-  def set_order
-    @order = Order.find_by(id: params[:order_id])
   end
 end

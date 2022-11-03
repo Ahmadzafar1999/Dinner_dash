@@ -2,13 +2,14 @@
 
 # This is the orders controller to manage and manipulate the orders
 class OrdersController < ApplicationController
+  include Orderable
   before_action :set_order, only: %i[update show]
   before_action :order_params, only: [:create]
 
   def index
-    if current_user.admin?
+    if admin?
       @orders = Order.all
-    elsif current_user.customer?
+    elsif customer?
       @orders = Order.where(user_id: current_user.id)
     end
   end
@@ -32,8 +33,6 @@ class OrdersController < ApplicationController
     redirect_to line_items_path(order_id: @order.id)
   end
 
-  def destroy; end
-
   private
 
   def order_params
@@ -42,7 +41,7 @@ class OrdersController < ApplicationController
 
   def shift_items_to_order
     set_cart
-    @lineitems = LineItem.where(cart_id: @cart.id)
+    @lineitems = items_in_cart(@cart.id)
     @lineitems.each do |lineitem|
       lineitem.order_id = @order.id
       lineitem.cart_id = nil

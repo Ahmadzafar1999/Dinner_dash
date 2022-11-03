@@ -2,14 +2,11 @@
 
 # This is the product category controller
 class CartsController < ApplicationController
+  include Cartable
   before_action :set_cart, only: [:show]
 
   def show
-    @lineitems = LineItem.where(cart_id: current_user.cart.id)
-  end
-
-  def create
-    @cart = Cart.new(cart_params)
+    @lineitems = items_in_user_cart
   end
 
   private

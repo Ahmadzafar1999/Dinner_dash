@@ -29,7 +29,7 @@
           </div>
           <% if order.status == 'ordered' || order.status == 'paid' %>
             <%= button_to 'Cancel Order', order_path(order.id, recieved: 0), method: 'patch', class: "btn btn-danger " %><br>
-            <%= button_to 'Order Recieved', order_path(order.id, recieved: 1), method: 'patch', class: "btn btn-info " %><br><br>
+            <%= button_to 'Complete Order', order_path(order.id, recieved: 1), method: 'patch', class: "btn btn-info " %><br><br>
         <% end %>
         </div>
       <% end %>
