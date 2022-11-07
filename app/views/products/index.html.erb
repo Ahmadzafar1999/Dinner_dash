@@ -28,6 +28,15 @@
         </div>
       <% end %>
     </tbody>
+    <div class="cat">
+          <%= form_with(model: @product, url: 'products', method: 'get', local: true) do |form| %>
+            <%= form.label :Category %><br>
+            <%= form.collection_select :category_ids, Category.all, :id, :name, {include_blank: "select category"},  {:multiple => true} %>
+            <div class="actions">
+              <%= form.submit "Filter Products" %>
+            </div>
+          <% end %>
+        </div>
   </table>
   <br>
         <% if current_user.admin? %>
