@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+config.assets.initialize_on_precompile = false
 require_relative 'boot'
 
 require 'rails/all'
