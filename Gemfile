@@ -41,6 +41,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'spring'
 end
 
 group :production do
@@ -48,7 +49,7 @@ group :production do
   # gem 'puma',           '2.11.1'
   gem 'rails_12factor', '0.0.2'
 end
-gem 'spring'
+
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'listen', '>= 3.0.5', '< 3.2'
