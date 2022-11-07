@@ -22,7 +22,7 @@
       </br>
       <%= form.label :Category%><br>
     <%= form.collection_select :category_ids, Category.all, :id, :name, {include_blank: "select category"},  {:multiple => true} %>
-  </div
+  </div>
 
     <div class="actions">
       <%= form.submit %>

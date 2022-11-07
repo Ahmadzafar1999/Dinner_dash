@@ -96,6 +96,23 @@ body {
   padding-left: 150px;
 }
 
+.cat {
+  background: rgb(198, 235, 173);
+  position: absolute;
+  top: 70px;
+  right: 10px;
+}
+
+.cat h1 {
+  text-align: center;
+}
+
+.cat button {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
 .content-one {
   display: flex;
   flex-direction: column;

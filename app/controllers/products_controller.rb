@@ -6,6 +6,15 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all
+    if params[:category_ids].present?
+      ids = params[:category_ids].filter { |el| el != '' }
+      if ids.present?
+        ids.each do |cat|
+          @products = Category.find_by(id: cat.to_i).products
+        end
+      end
+    end
+    @products
   end
 
   def show; end
